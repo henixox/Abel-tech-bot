@@ -1,22 +1,19 @@
 import telebot
+import os
 
-# የአዲሱ ቦት (@Abeletechbot) ቶከን
+# ትክክለኛው ቶከን
 API_TOKEN = '8530081968:AAFg4PPaTkLkX2U8iJSJ8hwaQWd89Xkt1vw'
-# የአንተ መለያ (ID)
 ADMIN_ID = 8596054746
 
 bot = telebot.TeleBot(API_TOKEN)
 
-@bot.message_handler(commands=['start', 'help'])
+@bot.message_handler(commands=['start'])
 def send_welcome(message):
-    bot.reply_to(message, "ሰላም አቤል! አዲሱ ቦት (@Abeletechbot) በትክክል ስራ ጀምሯል። ጥያቄዎን እዚህ ይጻፉ።")
+    bot.reply_to(message, "ሰላም አቤል! ቦቱ አሁን በ Render ላይ በትክክል እየሰራ ነው።")
 
 @bot.message_handler(func=lambda message: True)
 def forward_to_admin(message):
-    # ለደንበኛው የሚሰጥ ምላሽ
-    bot.reply_to(message, "መልዕክትዎ ደርሶናል! በቅርቡ እንመለስልዎታለን።")
-    # መልዕክቱን ወደ አንተ (አድሚኑ) መላክ
-    bot.send_message(ADMIN_ID, f"አዲስ መልዕክት ከ: @{message.from_user.username}\n\nይዘት: {message.text}")
+    bot.reply_to(message, "መልዕክትዎ ደርሶናል!")
+    bot.send_message(ADMIN_ID, f"መልዕክት ከ: @{message.from_user.username}\n\n{message.text}")
 
-print("ቦቱ @Abeletechbot ስራ ጀምሯል...")
 bot.infinity_polling()
